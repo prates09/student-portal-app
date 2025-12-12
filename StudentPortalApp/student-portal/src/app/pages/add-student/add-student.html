@@ -1,0 +1,101 @@
+<section class="form-wrapper">
+  <h1 class="page-title">Add Student</h1>
+
+  <form
+    class="student-form"
+    [formGroup]="studentForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+   
+    <div class="form-row">
+      <label for="name">Name *</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Min 5 characters"
+      />
+      <div class="field-error" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <span *ngIf="name.errors?.['required']">Name is required.</span>
+        <span *ngIf="name.errors?.['minlength']">
+          Name must be at least 5 characters.
+        </span>
+      </div>
+    </div>
+
+   
+    <div class="form-row">
+      <label for="class">Class *</label>
+      <div class="class-row">
+        <select id="class" formControlName="class">
+          <option value="" disabled>Select class</option>
+          <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+        </select>
+
+        
+        <span class="class-message" *ngIf="classMessage">
+          {{ classMessage }}
+        </span>
+      </div>
+      <div
+        class="field-error"
+        *ngIf="classCtrl.invalid && (classCtrl.dirty || classCtrl.touched)"
+      >
+        Class is required.
+      </div>
+    </div>
+
+  
+    <div class="form-row">
+      <label>Gender *</label>
+      <div class="gender-options">
+        <label>
+          <input type="radio" value="Male" formControlName="gender" />
+          Male
+        </label>
+        <label>
+          <input type="radio" value="Female" formControlName="gender" />
+          Female
+        </label>
+      </div>
+      <div
+        class="field-error"
+        *ngIf="gender.invalid && (gender.dirty || gender.touched)"
+      >
+        Gender is required.
+      </div>
+    </div>
+
+    
+    <div class="form-row checkbox-row">
+      <label>
+        <input type="checkbox" formControlName="hasHobby" />
+        I have a hobby
+      </label>
+    </div>
+
+   
+    <div class="form-row" *ngIf="hasHobbyCtrl.value">
+      <label for="hobby">Hobby</label>
+      <input id="hobby" type="text" formControlName="hobby" />
+    </div>
+
+   
+    <div class="form-row">
+      <label for="favoriteSubject">Favorite Subject</label>
+      <select id="favoriteSubject" formControlName="favoriteSubject">
+        <option value="">(Optional) Select subject</option>
+        <option *ngFor="let s of subjects" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Save</button>
+      <button type="button" class="btn secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</section>
